@@ -2,7 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import withRouter from '../utils/withRouter';
-
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 class Product extends Component {
     constructor(props) {
         super(props);
@@ -13,19 +15,29 @@ class Product extends Component {
     render() {
         const prods = this.state.products.map((item) => {
             return (
-                <div key={item._id} className="inline">
-                    <figure>
-                        <Link to={'/product/' + item._id}><img src={"data:image/jpg;base64," + item.image} width="300px" height="300px" alt="" /></Link>
-                        <figcaption className="text-center">{item.name}<br />Price: {item.price}</figcaption>
-                    </figure>
+                <div key={item._id} className="inline  mx-auto" style={{ paddingLeft: '1rem', paddingTop: '1rem' }}>
+                    <Card className='hov shadow-2xl'>
+                        <Link to={'/product/' + item._id}><Card.Img className='hover:opacity-50' variant="top" src={"data:image/jpg;base64," + item.image} width="300px" height="300px" alt="" /></Link>
+                        <Card.Body>
+                            <Card.Title>{item.name}</Card.Title>
+                            <Card.Text>
+                                Price: <h5>{item.price} $</h5>
+                            </Card.Text>
+                            <Link to={'/product/' + item._id}><Button variant="primary">See detail</Button></Link>
+                        </Card.Body>
+                    </Card>
                 </div>
             );
         });
         return (
-            <div className="text-center">
-                <h2 className="text-center">LIST PRODUCTS</h2>
-                {prods}
-            </div>
+            <Container>
+                <div className="text-center">
+                    <h2 className="text-center h-3 mb-5 mt-3 font-bold mt-3 text-4xl">LIST PRODUCTS</h2>
+                    <div className='grid sm:grid-cols-3 grid-cols-1 gap-3'>
+                        {prods}
+                    </div>
+                </div>
+            </Container>
         );
     }
     componentDidMount() { // first: /product/...
