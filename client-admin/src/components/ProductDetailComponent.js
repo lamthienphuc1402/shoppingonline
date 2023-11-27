@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { Component } from 'react';
-import MyContext from '../contexts/MyContext';
+import axios from "axios";
+import React, { Component } from "react";
+import MyContext from "../contexts/MyContext";
 
 class ProductDetail extends Component {
   static contextType = MyContext; // using this.context to access global state
@@ -8,60 +8,138 @@ class ProductDetail extends Component {
     super(props);
     this.state = {
       categories: [],
-      txtID: '',
-      txtName: '',
+      txtID: "",
+      txtName: "",
       txtPrice: 0,
-      cmbCategory: '',
-      imgProduct: '',
+      cmbCategory: "",
+      imgProduct: "",
     };
   }
   render() {
     const cates = this.state.categories.map((cate) => {
       if (this.props.item != null) {
-        return (<option key={cate._id} value={cate._id} selected={cate._id === this.props.item.category._id}>{cate.name}</option>);
+        return (
+          <option
+            key={cate._id}
+            value={cate._id}
+            selected={cate._id === this.props.item.category._id}
+          >
+            {cate.name}
+          </option>
+        );
       } else {
-        return (<option key={cate._id} value={cate._id}>{cate.name}</option>);
+        return (
+          <option key={cate._id} value={cate._id}>
+            {cate.name}
+          </option>
+        );
       }
     });
     return (
-      <div className="float-right">
-        <h2 className="text-center">PRODUCT DETAIL</h2>
+      <div className="pl-4 flex sm:justify-start justify-center sm:items-start items-center flex-col w-full">
+        <h2 className="text-center font-bold mt-5 text-3xl mb-3">
+          Product Details
+        </h2>
         <form>
           <table>
             <tbody>
               <tr>
-                <td>ID</td>
-                <td><input type="text" value={this.state.txtID} onChange={(e) => { this.setState({ txtID: e.target.value }) }} readOnly={true} /></td>
-              </tr>
-              <tr>
-                <td>Name</td>
-                <td><input type="text" value={this.state.txtName} onChange={(e) => { this.setState({ txtName: e.target.value }) }} /></td>
-              </tr>
-              <tr>
-                <td>Price</td>
-                <td><input type="text" value={this.state.txtPrice} onChange={(e) => { this.setState({ txtPrice: e.target.value }) }} /></td>
-              </tr>
-              <tr>
-                <td>Image</td>
-                <td><input type="file" name="fileImage" accept="image/jpeg, image/png, image/gif" onChange={(e) => this.previewImage(e)} /></td>
-              </tr>
-              <tr>
-                <td>Category</td>
-                <td><select onChange={(e) => { this.setState({ cmbCategory: e.target.value }) }}>{cates}</select></td>
-              </tr>
-              <tr>
-                <td></td>
+                <td className="font-bold ">ID</td>
                 <td>
-                  <input type="submit" value="ADD NEW" onClick={(e) => this.btnAddClick(e)} />
-                  <input type="submit" value="UPDATE" onClick={(e) => this.btnUpdateClick(e)} />
-                  <input type="submit" value="DELETE" onClick={(e) => this.btnDeleteClick(e)} />
+                  <input
+                    type="text"
+                    value={this.state.txtID}
+                    className="border border-black px-2 rounded-md"
+                    placeholder="Item's id"
+                    onChange={(e) => {
+                      this.setState({ txtID: e.target.value });
+                    }}
+                    readOnly={true}
+                  />
                 </td>
               </tr>
               <tr>
-                <td colSpan="2"><img src={this.state.imgProduct} width="300px" height="300px" alt="" /></td>
+                <td>Name</td>
+                <td>
+                  <input
+                    type="text"
+                    value={this.state.txtName}
+                    className="border border-black px-2 rounded-md"
+                    placeholder="Item's name"
+                    onChange={(e) => {
+                      this.setState({ txtName: e.target.value });
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Price</td>
+                <td>
+                  <input
+                    type="text"
+                    value={this.state.txtPrice}
+                    className="border border-black px-2 rounded-md"
+                    placeholder="Item's price"
+                    onChange={(e) => {
+                      this.setState({ txtPrice: e.target.value });
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Image</td>
+                <td>
+                  <input
+                    type="file"
+                    name="fileImage"
+                    accept="image/jpeg, image/png, image/gif"
+                    onChange={(e) => this.previewImage(e)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Category</td>
+                <td>
+                  <select
+                    onChange={(e) => {
+                      this.setState({ cmbCategory: e.target.value });
+                    }}
+                  >
+                    {cates}
+                  </select>
+                </td>
               </tr>
             </tbody>
           </table>
+          <div className="flex w-full flex-wrap sm:justify-start justify-center items-center gap-4 my-2">
+            <input
+              type="submit"
+              value="ADD NEW"
+              className="px-6 py-2 bg-green-700 hover:bg-green-500 hover:cursor-pointer font-bold rounded text-white"
+              onClick={(e) => this.btnAddClick(e)}
+            />
+            <input
+              type="submit"
+              value="UPDATE"
+              className="px-6 py-2 bg-yellow-700 hover:bg-yellow-500 hover:cursor-pointer font-bold rounded text-white"
+              onClick={(e) => this.btnUpdateClick(e)}
+            />
+            <input
+              type="submit"
+              value="DELETE"
+              className="px-6 py-2 bg-red-700 hover:bg-red-500 hover:cursor-pointer font-bold rounded text-white"
+              onClick={(e) => this.btnDeleteClick(e)}
+            />
+          </div>
+          {this.state.imgProduct !== "" && (
+            <div>
+              <img
+                src={this.state.imgProduct}
+                className="w-full h-full pr-4"
+                alt=""
+              />
+            </div>
+          )}
         </form>
       </div>
     );
@@ -69,25 +147,25 @@ class ProductDetail extends Component {
   // event-handlers
   btnDeleteClick(e) {
     e.preventDefault();
-    if (window.confirm('ARE YOU SURE?')) {
+    if (window.confirm("ARE YOU SURE?")) {
       const id = this.state.txtID;
       if (id) {
         this.apiDeleteProduct(id);
       } else {
-        alert('Please input id');
+        alert("Please input id");
       }
     }
   }
   // apis
   apiDeleteProduct(id) {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.delete('/api/admin/products/' + id, config).then((res) => {
+    const config = { headers: { "x-access-token": this.context.token } };
+    axios.delete("/api/admin/products/" + id, config).then((res) => {
       const result = res.data;
       if (result) {
-        alert('OK BABY!');
+        alert("OK BABY!");
         this.apiGetProducts();
       } else {
-        alert('SORRY BABY!');
+        alert("SORRY BABY!");
       }
     });
   }
@@ -98,24 +176,32 @@ class ProductDetail extends Component {
     const name = this.state.txtName;
     const price = parseInt(this.state.txtPrice);
     const category = this.state.cmbCategory;
-    const image = this.state.imgProduct.replace(/^data:image\/[a-z]+;base64,/, ''); // remove "data:image/...;base64,"
+    const image = this.state.imgProduct.replace(
+      /^data:image\/[a-z]+;base64,/,
+      ""
+    ); // remove "data:image/...;base64,"
     if (id && name && price && category && image) {
-      const prod = { name: name, price: price, category: category, image: image };
+      const prod = {
+        name: name,
+        price: price,
+        category: category,
+        image: image,
+      };
       this.apiPutProduct(id, prod);
     } else {
-      alert('Please input id and name and price and category and image');
+      alert("Please input id and name and price and category and image");
     }
   }
   // apis
   apiPutProduct(id, prod) {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.put('/api/admin/products/' + id, prod, config).then((res) => {
+    const config = { headers: { "x-access-token": this.context.token } };
+    axios.put("/api/admin/products/" + id, prod, config).then((res) => {
       const result = res.data;
       if (result) {
-        alert('OK BABY!');
+        alert("OK BABY!");
         this.apiGetProducts();
       } else {
-        alert('SORRY BABY!');
+        alert("SORRY BABY!");
       }
     });
   }
@@ -125,42 +211,66 @@ class ProductDetail extends Component {
     const name = this.state.txtName;
     const price = parseInt(this.state.txtPrice);
     const category = this.state.cmbCategory;
-    const image = this.state.imgProduct.replace(/^data:image\/[a-z]+;base64,/, ''); // remove "data:image/...;base64,"
+    const image = this.state.imgProduct.replace(
+      /^data:image\/[a-z]+;base64,/,
+      ""
+    ); // remove "data:image/...;base64,"
     if (name && price && category && image) {
-      const prod = { name: name, price: price, category: category, image: image };
+      const prod = {
+        name: name,
+        price: price,
+        category: category,
+        image: image,
+      };
       this.apiPostProduct(prod);
     } else {
-      alert('Please input name and price and category and image');
+      alert("Please input name and price and category and image");
     }
   }
   // apis
   apiPostProduct(prod) {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.post('/api/admin/products', prod, config).then((res) => {
+    const config = { headers: { "x-access-token": this.context.token } };
+    axios.post("/api/admin/products", prod, config).then((res) => {
       const result = res.data;
       if (result) {
-        alert('OK BABY!');
+        alert("OK BABY!");
         this.apiGetProducts();
       } else {
-        alert('SORRY BABY!');
+        alert("SORRY BABY!");
       }
     });
   }
   apiGetProducts() {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.get('/api/admin/products?page=' + this.props.curPage, config).then((res) => {
-      const result = res.data;
-      this.props.updateProducts(result.products, result.noPages, result.curPage);
-      if (result.products.length !== 0) {
-        this.props.updateProducts(result.products, result.noPages, result.curPage);
-      } else {
-        const curPage = this.props.curPage - 1;
-        axios.get('/api/admin/products?page=' + curPage, config).then((res) => {
-          const result = res.data;
-          this.props.updateProducts(result.products, result.noPages, curPage);
-        });
-      }
-    });
+    const config = { headers: { "x-access-token": this.context.token } };
+    axios
+      .get("/api/admin/products?page=" + this.props.curPage, config)
+      .then((res) => {
+        const result = res.data;
+        this.props.updateProducts(
+          result.products,
+          result.noPages,
+          result.curPage
+        );
+        if (result.products.length !== 0) {
+          this.props.updateProducts(
+            result.products,
+            result.noPages,
+            result.curPage
+          );
+        } else {
+          const curPage = this.props.curPage - 1;
+          axios
+            .get("/api/admin/products?page=" + curPage, config)
+            .then((res) => {
+              const result = res.data;
+              this.props.updateProducts(
+                result.products,
+                result.noPages,
+                curPage
+              );
+            });
+        }
+      });
   }
   componentDidMount() {
     this.apiGetCategories();
@@ -172,7 +282,7 @@ class ProductDetail extends Component {
         txtName: this.props.item.name,
         txtPrice: this.props.item.price,
         cmbCategory: this.props.item.category._id,
-        imgProduct: 'data:image/jpg;base64,' + this.props.item.image
+        imgProduct: "data:image/jpg;base64," + this.props.item.image,
       });
     }
   }
@@ -183,14 +293,14 @@ class ProductDetail extends Component {
       const reader = new FileReader();
       reader.onload = (evt) => {
         this.setState({ imgProduct: evt.target.result });
-      }
+      };
       reader.readAsDataURL(file);
     }
   }
   // apis
   apiGetCategories() {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.get('/api/admin/categories', config).then((res) => {
+    const config = { headers: { "x-access-token": this.context.token } };
+    axios.get("/api/admin/categories", config).then((res) => {
       const result = res.data;
       this.setState({ categories: result });
     });

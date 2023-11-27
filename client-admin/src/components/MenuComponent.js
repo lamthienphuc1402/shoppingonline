@@ -1,32 +1,28 @@
-import React, { Component } from 'react';
-import MyContext from '../contexts/MyContext';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import MyContext from "../contexts/MyContext";
+import { Link } from "react-router-dom";
+import { CiMenuBurger } from "react-icons/ci";
+import SidebarComponent from "./SidebarComponent";
 
 class Menu extends Component {
   static contextType = MyContext; // using this.context to access global state
+  constructor(props) {
+    super(props);
+    this.state = {
+      url: "/home",
+    };
+  }
   render() {
     return (
-      <div className="border-bottom">
-        <div className="float-left">
-          <ul className="menu">
-            <li className="menu"><Link to='/admin/home'>Home</Link></li>
-            <li className="menu"><Link to='/admin/category'>Category</Link></li>
-            <li className="menu"><Link to='/admin/product'>Product</Link></li>
-            <li className="menu"><Link to='/admin/order'>Order</Link></li>
-            <li className="menu"><Link to='/admin/customer'>Customer</Link></li>
-          </ul>
-        </div>
-        <div className="float-right">
-          Hello <b>{this.context.username}</b> | <Link to='/admin/home' onClick={() => this.lnkLogoutClick()}>Logout</Link>
-        </div>
-        <div className="float-clear" />
-      </div>
+      <>
+        <SidebarComponent isMobile={false} username={this.context.username} />
+      </>
     );
   }
   // event-handlers
   lnkLogoutClick() {
-    this.context.setToken('');
-    this.context.setUsername('');
+    this.context.setToken("");
+    this.context.setUsername("");
   }
 }
 export default Menu;

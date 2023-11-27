@@ -4,11 +4,11 @@
   height: fit-content;
   margin: 0px auto;
 }
-.body-admin {
+/* .body-admin {
   width: fit-content;
   height: fit-content;
   margin: 0px auto;
-}
+} */
 div.inline {
   display: inline-block;
 }
@@ -34,7 +34,6 @@ figure.caption-right {
 span.link {
   cursor: pointer;
   color: blue;
-  text-decoration: underline;
 }
 /* menu.css */
 div.border-bottom {
