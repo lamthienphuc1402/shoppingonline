@@ -14,7 +14,7 @@ console.log(product);
   return (
     <>
     <h1 className='text-center font-bold my-4 text-4xl uppercase'>Best Seller</h1>
-    <div >
+    <div className='lg:px-[8rem] xs:px-3'>
         
         <Swiper pagination={true} navigation={true} loop={true} autoplay={true} modules={[Pagination, Navigation, Autoplay]}  className="mySwiper max-w-full shadow-2xl rounded-3xl dark:shadow-primary">
             {product.map(p => (
@@ -23,10 +23,10 @@ console.log(product);
                         <div className='sm:w-3/5 w-full'>
                             <img className='rounded-lg w-full shadow-1xl' src={"data:image/jpg;base64," + p.image} alt="image" />
                         </div>
-                        <div className='sm:w-2/5 w-full flex flex-col justify-center items-center'>
+                        <div className='sm:w-2/5 w-full flex flex-col justify-center items-center px-5'>
                             <h1 className='font-bold lg:text-5xl md:text-3xl sm:text-xl'>{p.name}</h1>
                             <div className='underline font-semibold text-2xl'><label className='underline'>Price: </label> <span className='font-bold'>{`${p.price} $`}</span></div>
-                            <Link to={'/product/' + p._id}><Button variant="primary" className=' mt-3'>See detail</Button></Link>
+                            <Link to={'/product/' + p._id}><Button variant="primary" className=' mt-3 text-2xl uppercase font-semibold text-center'>See detail</Button></Link>
                         </div>
                     </div>
                 </SwiperSlide>

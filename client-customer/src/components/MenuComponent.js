@@ -24,16 +24,28 @@ class Menu extends Component {
       return (
         <Nav.Link key={item._id}><Link className='link' to={'/product/category/' + item._id}>{item.name}</Link></Nav.Link>
       );
-    });   
+    });
     return (
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
-          <NavbarBrand><Link className='brand' to='/'>Kiki Shopping</Link></NavbarBrand>
+          <NavbarBrand className='fex justify-center items-center'>
+            <div className='d-flex items-center'>
+              <Link to='/home' >
+              <img className='rounded-xl '
+                src='https://cdn.discordapp.com/attachments/924360948859416656/1178743704622731424/vecteezy_shy-dog-logo-illustration-depicting-shy-dog-suitable-for_9551676-removebg-preview.png?ex=6577419f&is=6564cc9f&hm=5ee926fecd80a29687b8658e573ffcc35172777ec35cef417ccb6f0e894a123d&'
+                style={{ maxHeight: 70 }}
+              />
+              </Link>
+              <Link className='brand' to='/'>
+
+                Kiki Shopping</Link>
+            </div>
+          </NavbarBrand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="mx-auto my-2 my-lg-0 justify-content-center"
-              style={{ maxHeight: '100px' }}
+              style={{ maxHeight: '370px' }}
               navbarScroll
             >
               <Nav.Link><Link className='link' to='/'>Home</Link></Nav.Link>
@@ -41,13 +53,20 @@ class Menu extends Component {
 
               {cates}
             </Nav>
-            <Form className="d-flex">
+            <Form className="d-flex" onSubmit={(e) => { e.preventDefault(); this.btnSearchClick(e); }}>
               <Form.Control
                 type="search"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
-                value={this.state.txtKeyword} onChange={(e) => { this.setState({ txtKeyword: e.target.value }) }}
+                value={this.state.txtKeyword}
+                onChange={(e) => { this.setState({ txtKeyword: e.target.value }) }}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.btnSearchClick(e);
+                  }
+                }}
               />
               <Button variant="outline-success" onClick={(e) => this.btnSearchClick(e)}>Search</Button>
             </Form>
@@ -70,9 +89,9 @@ class Menu extends Component {
   btnSearchClick(e) {
     e.preventDefault();
     this.props.navigate('/product/search/' + this.state.txtKeyword);
-    
+
   }
 
-  
+
 }
 export default withRouter(Menu);

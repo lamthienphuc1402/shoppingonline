@@ -17,6 +17,7 @@ import FooterComponent from './FooterComponent';
 import Gmap from './GmapComponent';
 import TawkMessenger from './TawkMessengerComponent';
 import Loading from './Loading';
+import ForgotPasswordComponent from'./ForgotPasswordComponent';
 
 const Home = lazy(() => import("./HomeComponent"))
 
@@ -41,6 +42,7 @@ class Main extends Component {
                         <Route path='/mycart' element={<Mycart />} />
                         <Route path='/myorders' element={<Myorders />} />
                         <Route path='/gmap' element={<Gmap />} />
+                        <Route path='/forgot' element={<ForgotPasswordComponent />}/>
                     </Routes>
                 <FooterComponent />
                 <TawkMessenger />

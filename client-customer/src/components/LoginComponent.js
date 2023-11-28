@@ -88,6 +88,21 @@ class Login extends Component {
                                     onClick={() => this.btnSignup()}>
                                     Sign up
                                 </button>
+                                <div
+                                    className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+                                    <p
+                                        className="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
+                                        FORGET PASSWORD?
+                                    </p>
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="inline-block w-full rounded bg-red-600 px-7 pb-2.5 pt-3 text-base uppercase leading-normal text-white font-bold shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-red-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-red-600 focus:shadow-[0_8px_9px_-4px_rgba(202, 59, 59,0.3),0_4px_18px_0_rgba(202, 59, 59,0.2)] focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-[0_8px_9px_-4px_rgba(202, 59, 59,0.3),0_4px_18px_0_rgba(202, 59, 59,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(202, 59, 59,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(202, 59, 59,0.2),0_4px_18px_0_rgba(202, 59, 59,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(202, 59, 59,0.2),0_4px_18px_0_rgba(202, 59, 59,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(202, 59, 59,0.2),0_4px_18px_0_rgba(202, 59, 59,0.1)]"
+                                    data-te-ripple-init
+                                    data-te-ripple-color="light"
+                                    onClick={() => this.btnForgot()}>
+                                    FORGET PASSWORD
+                                </button>
 
 
 
@@ -128,6 +143,11 @@ class Login extends Component {
     btnSignup() {
 
         this.props.navigate('/signup');
+
+    }
+    btnForgot() {
+
+        this.props.navigate('/forgot');
 
     }
 }
