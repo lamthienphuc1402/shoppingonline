@@ -160,4 +160,49 @@ router.post("/signup", async function (req, res) {
   }
 });
 
+router.post("/comments", async function (req, res) {
+  const { customerId, content, productId } = req.body;
+  const result = await ProductDAO.postComment(customerId, content, productId);
+  if (result) {
+    console.log("called");
+    res.json({ comments: result });
+  }
+  return;
+});
+
+function madePassword(length) {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+router.post("/forgot", async function (req, res) {
+  const { customerEmail } = req.body;
+  const newPassword = madePassword(7);
+  const customerFound = await CustomerDAO.findByEmail(customerEmail);
+  if (customerFound) {
+    const isChanged = await CustomerDAO.updatePassword(
+      customerFound._id,
+      newPassword
+    );
+    if (isChanged) {
+      const send = await EmailUtil.forgotPassword(customerEmail, newPassword);
+      if (send) {
+        res.json({ success: true, message: "Please check email" });
+      } else {
+        res.json({ success: false, message: "Email failure" });
+      }
+    } else {
+      res.json({ success: false, message: "Not exists customer" });
+    }
+  }
+});
+
 module.exports = router;

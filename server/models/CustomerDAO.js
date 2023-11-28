@@ -56,5 +56,17 @@ const CustomerDAO = {
     }).exec();
     return customers;
   },
+  async findByEmail(email) {
+    const customer = await Models.Customer.findOne({
+      email,
+    }).exec();
+    return customer;
+  },
+  async updatePassword(idUser, newPassword) {
+    const result = await Models.Customer.findOneAndUpdate(idUser, {
+      password: newPassword,
+    }).exec();
+    return true;
+  },
 };
 module.exports = CustomerDAO;
