@@ -14,8 +14,8 @@ class Login extends Component {
   render() {
     if (this.context.token === "") {
       return (
-        <div className="flex justify-center items-center flex-col  h-screen space-y-5">
-          <div className="border border-black p-4 space-y-5 rounded-lg">
+        <div className="flex justify-center items-center flex-col  h-screen space-y-5 bg-gradient-to-r from-sky-500 to-indigo-500">
+          <div className=" p-4 space-y-5 rounded-lg shadow-[0_0_45px_-10px]  bg-white ">
             <h1 className="text-center text-4xl font-bold ">ADMIN LOGIN</h1>
             <form className="space-y-5">
               <div className="flex justify-center items-center">

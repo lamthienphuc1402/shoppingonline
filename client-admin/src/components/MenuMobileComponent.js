@@ -23,7 +23,6 @@ const MenuMobileComponent = ({ username }) => {
             size={20}
           />
         </div>
-        <div>Login</div>
       </div>
     </>
   );
