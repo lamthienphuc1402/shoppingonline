@@ -22,69 +22,100 @@ class ProductDetail extends Component {
       return (
         <div className="md:px-20 sm:px-5">
           <div className="align-center w-full">
-              
-              <div className='flex sm:flex-row flex-col sm:justify-start justify-center items-center py-10 md:px-10 xs:px-5 shadow-2xl rounded-2xl'>
-                <div className='sm:w-3/5 w-full'>
-                  <img className='rounded-lg w-full shadow-1xl' src={"data:image/jpg;base64," + prod.image} alt="image" />
+
+            <div className='flex sm:flex-row flex-col sm:justify-start justify-center items-center py-10 md:px-10 xs:px-5 shadow-2xl rounded-2xl'>
+              <div className='sm:w-3/5 w-full'>
+                <img className='rounded-lg w-full shadow-1xl' src={"data:image/jpg;base64," + prod.image} alt="image" />
+              </div>
+              <div className='sm:w-2/5 w-full flex justify-center md:items-start md:text-start xs:items-center xs:text-center flex-col px-10'>
+                <h1 className='font-bold lg:text-5xl md:text-3xl sm:text-xl mb-4 xs:mt-5'>{prod.name}</h1>
+                <div className="mb-4 font-semibold lg:text-xl md:text-base xs:text-sm">Category: {prod.category.name}</div>
+                <div className="font-semibold lg:text-xl md:text-base xs:text-sm">
+                  ID: {prod._id}
                 </div>
-                <div className='sm:w-2/5 w-full flex justify-center md:items-start md:text-start xs:items-center xs:text-center flex-col px-10'>
-                  <h1 className='font-bold lg:text-5xl md:text-3xl sm:text-xl mb-4 xs:mt-5'>{prod.name}</h1>
-                  <div className="mb-4 font-semibold lg:text-xl md:text-base xs:text-sm">Category: {prod.category.name}</div>
-                  <div className="font-semibold lg:text-xl md:text-base xs:text-sm">
-                    ID: {prod._id}
+                <div className='font-semibold text-2xl mt-4'><label>Price: </label> <span className='font-bold'>{`${prod.price} $`}</span></div>
+                <div className='row align-items-center mt-4'>
+                  <div className='col-auto font-semibold lg:text-xl md:text-base xs:text-sm'>
+                    Quantity
                   </div>
-                  <div className='font-semibold text-2xl mt-4'><label>Price: </label> <span className='font-bold'>{`${prod.price} $`}</span></div>
-                  <div className='row align-items-center mt-4'>
-                    <div className='col-auto font-semibold lg:text-xl md:text-base xs:text-sm'>
-                      Quantity
-                    </div>
-                    <div className='col-auto '>
-                      <input className='mx-2 form-control' type="number" min="1" max="99" value={this.state.txtQuantity} onChange={(e) => { this.setState({ txtQuantity: e.target.value }) }} />
-                    </div>
+                  <div className='col-auto '>
+                    <input className='mx-2 form-control' type="number" min="1" max="99" value={this.state.txtQuantity} onChange={(e) => { this.setState({ txtQuantity: e.target.value }) }} />
                   </div>
-                  <div className=' mt-4'>
-                    {/* <input
+                </div>
+                <div className=' mt-4'>
+                  {/* <input
                         type="submit"
                         value="Mua ngay"s
                         className="btn btn-danger" disabled
                       /> */}
-                    <button
-                      type="submit"
-                      onClick={(e) => this.btnAdd2CartClick(e)}
-                      className="bg-primary-600 hover:bg-primary-700 shadow-primary-600 shadow-2xl uppercase text-white font-semibold text-2xl p-3"
-                    >Add to cart
-                    </button>
-                  </div>
+                  <button
+                    type="submit"
+                    onClick={(e) => this.btnAdd2CartClick(e)}
+                    className="bg-primary-600 hover:bg-primary-700 shadow-primary-600 shadow-2xl uppercase text-white font-semibold text-2xl p-3"
+                  >Add to cart
+                  </button>
                 </div>
               </div>
-
+            </div>
           </div>
           <div>
-          <h2 className="text-center mt-3">Login to see or view comments</h2>
-            <div className="flex flex-col justify-center items-center w-full gap-x-4 px-5">
-              {this.state.comments.map((comment, index) => (
-                <CommentComponent {...comment} key={index} />
-                ))}
-            </div>
+            {this.context.token === '' ?
+              <h2 className="text-center mt-3">Login to see or view comments</h2> :
+              <h2 className="text-center">List comments</h2>}
+
             {this.context.customer && (
-              <div>
-                <form
-                  className="flex justify-center items-center gap-x-2"
+
+              <div className="w-full">
+                <div className="flex flex-col justify-center items-center w-full gap-x-4 px-5">
+                  {this.state.comments.map((comment, index) => (
+                    <CommentComponent {...comment} key={index} />
+                  ))}
+                </div>
+                <div className="w-full my-2 px-5">
+                  <div className="flex shadow-xl rounded-lg gap-x-3 px-2 py-5">
+                    <div className="flex flex-col justify-center items-center">
+                      <h1 className="text-lg font-bold text-center">{this.context.customer.name}</h1>
+                      {/* <p>@{this.context.customer.username}</p> */}
+                    </div>
+                    <div className="flex flex-col justify-start items-start w-full">
+                      <form
+                        className="flex justify-center items-center gap-x-2 w-full h-full"
+                        onSubmit={(e) => this.handleSubmit(e)}
+                      >
+                        <input
+                          type="text"
+                          className="shadow-xl px-4 py-2 rounded-xl w-full h-full"
+                          value={this.state.content}
+                          placeholder="Input your comment here"
+                          onChange={(e) => this.setState({ content: e.target.value })}
+                        />
+                        <input
+                          type="submit"
+                          className="bg-primary-600 hover:bg-primary-700 px-4 shadow-primary-600 shadow-2xl py-2 rounded-lg text-white font-bold"
+                          value="POST"
+                        />
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {/* <form
+                  className="flex justify-center items-center gap-x-2 w-full"
                   onSubmit={(e) => this.handleSubmit(e)}
                 >
+                  <label>{this.context.customer.name}</label>
                   <input
                     type="text"
-                    className="border border-black px-4 py-2 rounded-md"
+                    className="shadow-xl px-4 py-2 rounded-xl w-full"
                     value={this.state.content}
                     placeholder="Input your comment here"
                     onChange={(e) => this.setState({ content: e.target.value })}
                   />
                   <input
                     type="submit"
-                    className="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-lg text-white font-bold"
+                    className="bg-primary-600 hover:bg-primary-700 px-4 shadow-primary-600 shadow-2xl py-2 rounded-lg text-white font-bold"
                     value="POST"
                   />
-                </form>
+                </form> */}
               </div>
             )}
           </div>
