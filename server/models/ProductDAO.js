@@ -99,5 +99,10 @@ const ProductDAO = {
     console.log("result");
     return result.comments;
   },
+  async findByName(keyword) {
+    const query = { name: { $regex: new RegExp(keyword, "i") } };
+    const products = await Models.Product.find(query).exec();
+    return products;
+  },
 };
 module.exports = ProductDAO;

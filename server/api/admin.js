@@ -183,4 +183,15 @@ router.get("/find-category/:category", JwtUtil.checkToken, async (req, res) => {
     res.json({ success: false, categories });
   }
 });
+//find products
+router.get("/find-products/:keyword", JwtUtil.checkToken, async (req, res) => {
+  const keyword = req.params.keyword;
+  const products = await ProductDAO.selectByKeyword(keyword);
+  console.log(products);
+  if (products) {
+    res.json({ success: true, products });
+  } else {
+    res.json({ success: false, products });
+  }
+});
 module.exports = router;
