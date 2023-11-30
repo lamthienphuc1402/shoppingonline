@@ -44,9 +44,10 @@ class Home extends Component {
                         <Link to={'/product/' + item._id}><Card.Img className='hover:opacity-50' variant="top" src={"data:image/jpg;base64," + item.image} width="300px" height="450px" alt="" /></Link>
                         <Card.Body className='text-center items-center'>
                             <Card.Title>{item.name}</Card.Title>
+                            <Card.Title><h5 className='pt-1'>{item.price} $</h5></Card.Title>
                             <Link to={'/product/' + item._id}><Button variant="primary" className='w-full'>
                                 <Card.Text className=' flex justify-center items-center'>
-                                    <h5 className='pt-1'>{item.price} $</h5>
+                                    See detail
                                 </Card.Text>
                             </Button>
                             </Link>

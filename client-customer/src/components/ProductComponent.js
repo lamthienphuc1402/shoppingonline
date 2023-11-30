@@ -17,29 +17,17 @@ class Product extends Component {
   render() {
     const prods = this.state.products.map((item) => {
       return (
-        <div
-          key={item._id}
-          className="inline  mx-auto"
-          style={{ paddingLeft: "1rem", paddingTop: "1rem" }}
-        >
-          <Card className="hov shadow-2xl">
-            <Link to={"/product/" + item._id}>
-              <Card.Img
-                className="hover:opacity-50"
-                variant="top"
-                src={"data:image/jpg;base64," + item.image}
-                width="300px"
-                height="300px"
-                alt=""
-              />
-            </Link>
-            <Card.Body>
+        <div key={item._id}>
+          <Card className='hov shadow-2xl dark:shadow-primary'>
+            <Link to={'/product/' + item._id}><Card.Img className='hover:opacity-50' variant="top" src={"data:image/jpg;base64," + item.image} width="300px" height="450px" alt="" /></Link>
+            <Card.Body className='text-center items-center'>
               <Card.Title>{item.name}</Card.Title>
-              <Card.Text>
-                Price: <h5>{item.price} $</h5>
-              </Card.Text>
-              <Link to={"/product/" + item._id}>
-                <Button variant="primary">See detail</Button>
+              <Card.Title><h5 className='pt-1'>{item.price} $</h5></Card.Title>
+              <Link to={'/product/' + item._id}><Button variant="primary" className='w-full'>
+                <Card.Text className=' flex justify-center items-center'>
+                  See detail
+                </Card.Text>
+              </Button>
               </Link>
             </Card.Body>
           </Card>
