@@ -19,9 +19,8 @@ class Product extends Component {
       return (
         <div
           key={item._id}
-          className={` ${
-            index % 2 === 0 ? "bg-yellow-200" : "bg-white"
-          }  grid grid-cols-6 w-full text-center gap-x-2 hover:cursor-pointer hover:bg-blue-300`}
+          className={` ${index % 2 === 0 ? "bg-yellow-200" : "bg-white"
+            }  grid grid-cols-6 w-full text-center gap-x-2 hover:cursor-pointer hover:bg-blue-300`}
           onClick={() => this.trItemClick(item)}
         >
           <div className="line-clamp-1">{item._id}</div>
@@ -68,7 +67,23 @@ class Product extends Component {
           <h2 className="text-center font-bold mt-5 text-3xl mb-3">
             Product List
           </h2>
-
+          <div className="w-full flex flex-row sm:justify-end sm:items-end justify-center items-center mb-3">
+            <div className="mr-4 ">
+              <input
+                type="text"
+                value={this.state.name}
+                className="border border-black py-2 px-1 mr-2"
+                placeholder="Input your category name"
+                onChange={(e) => this.setState({ name: e.target.value })}
+              />
+              <button
+                className="bg-green-500 rounded-lg hover:bg-green-800 py-2 px-3 text-white font-bold"
+                onClick={() => this.handleSearch(this.state.name)}
+              >
+                Search
+              </button>
+            </div>
+          </div>
           <div className="grid grid-cols-6 w-full text-center gap-x-2 font-bold bg-yellow-400 ">
             <div>ID</div>
             <div>Name</div>
@@ -91,6 +106,22 @@ class Product extends Component {
         </div>
       </div>
     );
+  }
+  handleSearch(name) {
+    const config = { headers: { "x-access-token": this.context.token } };
+    if (name === "") {
+      this.apiGetProducts();
+      return;
+    }
+    axios.get(`/api/admin/find-products/${name}`, config).then((res) => {
+      const result = res.data;
+      console.log(result);
+      this.setState({
+        products: result.products,
+        noPages: result.noPages,
+        curPage: result.curPage,
+      });
+    });
   }
   updateProducts = (products, noPages, curPage) => {
     // arrow-function
